@@ -8,8 +8,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Discord User List",
-  description: "A minimalistic Discord-style user list with theme toggle",
-    generator: 'v0.dev'
+  description: "Own Cool Peoples Discord User List",
 }
 
 export default function RootLayout({
