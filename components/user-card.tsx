@@ -28,7 +28,7 @@ export function UserCard({ user, onClick }: UserCardProps) {
     >
       <div className="bg-card border border-border/40 rounded-lg overflow-hidden hover:bg-accent/30 transition-colors">
         <div className="p-3 flex items-center gap-3">
-          {/* Avatar */}
+          {}
           <div className="relative">
             <div className="w-10 h-10 rounded-full overflow-hidden bg-accent">
               {user.avatar ? (
@@ -37,7 +37,6 @@ export function UserCard({ user, onClick }: UserCardProps) {
                   alt={user.username}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    // If avatar fails to load, replace with initial
                     e.currentTarget.style.display = "none"
                     e.currentTarget.parentElement!.innerHTML =
                       `<div class="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-medium">${user.username
@@ -51,12 +50,11 @@ export function UserCard({ user, onClick }: UserCardProps) {
                 </div>
               )}
             </div>
-            {/* <div
-              className={`absolute bottom-0 right-0 w-3 h-3 ${statusColors[user.status]} rounded-full border-2 border-background`}
-            ></div> */}
+            {
+}
           </div>
 
-          {/* User info */}
+          {}
           <div className="flex-grow min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-medium text-foreground truncate">{user.displayName || user.username}</h3>

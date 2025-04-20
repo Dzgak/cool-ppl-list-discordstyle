@@ -1,7 +1,6 @@
 import { cache } from "react"
 import { userCache, presenceCache, guildCache, fetchWithCache } from './cache'
 
-// Types for Discord API responses
 export interface DiscordUser {
   id: string
   username: string
@@ -35,7 +34,6 @@ export interface DiscordGuildMember {
   pending?: boolean
 }
 
-// Badge mapping
 export const DISCORD_BADGES: Record<number, string> = {
   1: "staff",
   2: "partner",
@@ -50,21 +48,18 @@ export const DISCORD_BADGES: Record<number, string> = {
   4194304: "active_developer",
 }
 
-// Helper to get user badges from flags
 export function getUserBadges(flags: number): string[] {
   return Object.entries(DISCORD_BADGES)
     .filter(([flag]) => (flags & Number.parseInt(flag)) === Number.parseInt(flag))
     .map(([_, name]) => name)
 }
 
-// Type for loading logs
 export type LoadingLog = {
   message: string
   type: 'info' | 'success' | 'error' | 'progress'
   timestamp: number
 }
 
-// Type for loading status
 export type LoadingStatus = {
   message: string
   type: 'info' | 'success' | 'error' | 'progress'
@@ -72,7 +67,6 @@ export type LoadingStatus = {
   userData?: DiscordUser
 }
 
-// Cached API calls to Discord
 export const getDiscordUsers = async (
   userIds: string[]
 ): Promise<{
@@ -91,7 +85,6 @@ export const getDiscordUsers = async (
     loadingStatus.push(logStart)
 
     for (const [index, userId] of userIds.entries()) {
-      // Check cache first
       const cached = userCache.get(userId)
       if (cached) {
         users.push(cached)
@@ -141,7 +134,6 @@ export const getDiscordUsers = async (
       }
     }
 
-    // Debug: log what is returned
     console.log("getDiscordUsers logs:", loadingStatus)
 
     return { users, loadingStatus }
@@ -164,7 +156,7 @@ export const getDiscordGuildMembers = cache(async (guildId: string): Promise<Dis
       headers: {
         Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
       },
-      next: { revalidate: 30 }, // Cache for 30 seconds for more real-time updates
+      next: { revalidate: 30 }, 
     })
 
     if (!response.ok) {
@@ -184,7 +176,7 @@ export const getDiscordPresences = cache(async (guildId: string): Promise<Discor
       headers: {
         Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
       },
-      next: { revalidate: 15 }, // Cache for 15 seconds for more real-time updates
+      next: { revalidate: 15 }, 
     })
 
     if (!response.ok) {

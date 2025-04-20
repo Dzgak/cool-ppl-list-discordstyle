@@ -12,8 +12,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { type LoadingStatus } from "@/lib/discord-api"
 import { cn } from "@/lib/utils"
 
-// Optional guild ID - if not provided, will use sample users
-const GUILD_ID = "" // Add your Discord server ID here if you have one
+const GUILD_ID = "" 
 const USERS_PER_PAGE = 5
 
 export function UserList() {
@@ -30,24 +29,20 @@ export function UserList() {
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [loadedCount, setLoadedCount] = useState(0)
   const [loadingLogs, setLoadingLogs] = useState<LoadingStatus[]>([])
-  const totalExpectedUsers = 2 // Changed from 20 to 2 since we only fetch 2 users
+  const totalExpectedUsers = 2 
 
-  // Function to load users
   const loadUsers = async () => {
     try {
       setLoading(true)
       setLoadingProgress(0)
       setLoadedCount(0)
-      // Clear logs for new fetch
       setLoadingLogs([])
 
       const { users: data, loadingStatus } = await fetchDiscordUsers(GUILD_ID || undefined, searchQuery)
       
-      // Process each log entry sequentially to simulate real-time updates
       for (const log of loadingStatus) {
         setLoadingLogs(prev => [...prev, log])
         
-        // Update progress based on log type
         if (log.type === "success") {
           setLoadedCount(prev => prev + 1)
           setLoadingProgress(prev => (prev + (100 / totalExpectedUsers)))
@@ -71,16 +66,13 @@ export function UserList() {
     }
   }
 
-  // Initial load only (not on search)
   useEffect(() => {
     loadUsers()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Handle search (filter client-side, don't reload from server)
   const handleSearch = (query: string) => {
     setSearchQuery(query)
-    setPage(1) // Reset pagination when searching
+    setPage(1) 
 
     if (!query) {
       setFilteredUsers(users)
@@ -95,26 +87,22 @@ export function UserList() {
     }
   }
 
-  // Update visible users when filtered users or page changes
   useEffect(() => {
     const startIndex = 0
     const endIndex = page * USERS_PER_PAGE
     setVisibleUsers(filteredUsers.slice(startIndex, endIndex))
   }, [filteredUsers, page])
 
-  // Handle load more
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1)
   }
 
-  // Handle user click
   const handleUserClick = (user: UserData) => {
     setSelectedUser(user)
     setProfileOpen(true)
   }
 
   if (loading && users.length === 0) {
-    // Find the last progress log index
     const lastProgressIdx = loadingLogs.map(l => l.type).lastIndexOf("progress")
     console.log("Render loadingLogs:", loadingLogs)
     return (
@@ -147,7 +135,7 @@ export function UserList() {
                   }
                 )}
               >
-                {/* Show avatar for success logs if available */}
+                {}
                 {log.type === "success" && log.userData?.avatar && (
                   <img
                     src={
@@ -160,11 +148,11 @@ export function UserList() {
                     style={{ minWidth: 20, minHeight: 20 }}
                   />
                 )}
-                {/* Show username for success logs */}
+                {}
                 {log.type === "success" && log.userData?.username && (
                   <span className="font-semibold">{log.userData.username}</span>
                 )}
-                {/* Show spinner for the last progress log */}
+                {}
                 {log.type === "progress" && i === lastProgressIdx && (
                   <Loader2 className="w-3 h-3 mr-1 animate-spin inline-block" />
                 )}
@@ -194,7 +182,6 @@ export function UserList() {
     )
   }
 
-  // Count online users (online, idle, dnd)
   const onlineCount = filteredUsers.filter((user) => user.status !== "offline").length
 
   return (
@@ -222,34 +209,34 @@ export function UserList() {
         </div>
       )}
 
-      {/* Group users by status */}
+      {}
       <div className="space-y-4">
         {visibleUsers.length === 0 ? (
           <p className="text-center text-muted-foreground py-8">No users found</p>
         ) : (
           <>
-            {/* Online users first */}
+            {}
             {visibleUsers
               .filter((user) => user.status === "online")
               .map((user) => (
                 <UserCard key={user.id} user={user} onClick={() => handleUserClick(user)} />
               ))}
 
-            {/* Idle users */}
+            {}
             {visibleUsers
               .filter((user) => user.status === "idle")
               .map((user) => (
                 <UserCard key={user.id} user={user} onClick={() => handleUserClick(user)} />
               ))}
 
-            {/* Do Not Disturb users */}
+            {}
             {visibleUsers
               .filter((user) => user.status === "dnd")
               .map((user) => (
                 <UserCard key={user.id} user={user} onClick={() => handleUserClick(user)} />
               ))}
 
-            {/* Offline users last */}
+            {}
             {visibleUsers
               .filter((user) => user.status === "offline")
               .map((user) => (
@@ -259,7 +246,7 @@ export function UserList() {
         )}
       </div>
 
-      {/* Load more button */}
+      {}
       {filteredUsers.length > visibleUsers.length && (
         <div className="flex justify-center mt-6">
           <Button onClick={handleLoadMore} variant="outline" className="w-full">
@@ -268,7 +255,7 @@ export function UserList() {
         </div>
       )}
 
-      {/* User profile modal */}
+      {}
       <UserProfileModal user={selectedUser} open={profileOpen} onOpenChange={setProfileOpen} />
     </motion.div>
   )

@@ -28,7 +28,6 @@ export function UserProfileModal({ user, open, onOpenChange }: UserProfileModalP
         setEffectSrc(null)
         return
       }
-      // Force re-fetch by adding a cache-busting query param
       const url = `https://cdn.discordapp.com/assets/profile_effects/effects/2025-04-05/f_in_chat_black/intro.png?cb=${Date.now()}`
       setEffectSrc(url)
       setEffectKey(key => key + 1)
@@ -51,7 +50,6 @@ export function UserProfileModal({ user, open, onOpenChange }: UserProfileModalP
 
   const hasProfileEffect = user.id === "1287660832133611520"
 
-  // Format badge display names
   const formatBadge = (badge: string) => {
     return badge
       .split("_")
@@ -59,7 +57,6 @@ export function UserProfileModal({ user, open, onOpenChange }: UserProfileModalP
       .join(" ")
   }
 
-  // Status colors
   const statusColors = {
     online: "bg-green-500",
     idle: "bg-yellow-500",
@@ -67,7 +64,6 @@ export function UserProfileModal({ user, open, onOpenChange }: UserProfileModalP
     offline: "bg-gray-500",
   }
 
-  // Status text
   const statusText = {
     online: "Online",
     idle: "Idle",
@@ -89,7 +85,7 @@ export function UserProfileModal({ user, open, onOpenChange }: UserProfileModalP
         )}
         <DialogHeader className="relative">
           <div className="h-32 bg-primary/10 -mx-6 -mt-6 rounded-t-lg relative">
-            {/* Banner */}
+            {}
             {user.banner ? (
               <>
                 <img
@@ -101,7 +97,7 @@ export function UserProfileModal({ user, open, onOpenChange }: UserProfileModalP
             ) : (
               <div className="w-full h-full bg-primary/10" />
             )}
-            {/* Avatar with decoration */}
+            {}
             <div className="absolute -bottom-10 left-4 z-20">
               <div className="relative">
                 {hasProfileEffect && (

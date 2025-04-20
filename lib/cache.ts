@@ -9,7 +9,7 @@ export class Cache<T> {
   private store = new Map<string, CacheEntry<T>>()
   private duration: number
 
-  constructor(durationMs: number = 60000) { // Default 1 minute
+  constructor(durationMs: number = 60000) { 
     this.duration = durationMs
   }
 
@@ -37,12 +37,10 @@ export class Cache<T> {
   }
 }
 
-// Global cache instances
-export const userCache = new Cache<any>(60000)      // 1 minute
-export const presenceCache = new Cache<any>(30000)   // 30 seconds
-export const guildCache = new Cache<any>(300000)     // 5 minutes
+export const userCache = new Cache<any>(60000)      
+export const presenceCache = new Cache<any>(30000)   
+export const guildCache = new Cache<any>(300000)     
 
-// React cached fetcher
 export const fetchWithCache = cache(async (url: string, options?: RequestInit) => {
   const response = await fetch(url, {
     ...options,
