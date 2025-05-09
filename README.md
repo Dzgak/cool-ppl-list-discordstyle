@@ -2,6 +2,19 @@
 
 A modern, responsive Discord user profile viewer built with Next.js 14 and TypeScript. Display Discord user profiles with real-time status updates, badges, and custom effects.
 
+## Preview
+
+<div align="center">
+  <h3>Loading Screen</h3>
+  <img src="https://images.guns.lol/Pax6y.png" alt="Loading Screen" width="600"/>
+  
+  <h3>User List</h3>
+  <img src="https://images.guns.lol/LbBMM.png" alt="User List" width="600"/>
+  
+  <h3>Profile Modal</h3>
+  <img src="https://images.guns.lol/jfKPx.png" alt="Profile Modal" width="600"/>
+</div>
+
 ## Features
 
 - Real-time Discord user status updates
